@@ -4,7 +4,7 @@ def get_arr_from_txt(filepath: str) -> list:
     return ret
 
 
-def get_num_decreases(filepath: str) -> int:
+def get_num_increases(filepath: str) -> int:
     depths = get_arr_from_txt(filepath)
     num_depths = len(depths)
 
@@ -21,5 +21,6 @@ def get_num_decreases(filepath: str) -> int:
 
 
 if __name__ == "__main__":
-    decreases = get_num_decreases("./input.txt")
-    print(f"There are {decreases} decreases in depth in the input")
+    increases = get_num_increases("./input.txt")
+    print(f"There are {increases} decreases in depth in the input")
+    
