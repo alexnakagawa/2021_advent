@@ -8,14 +8,14 @@ def get_arr_from_txt(filepath: str) -> list:
     return ret
 
 
-def get_three_sliding_window_sums(depths: list, window_size:int=3) -> list:
+def get_three_sliding_window_sums(depths: list, window_size: int = 3) -> list:
     num_depths = len(depths)
     if num_depths < window_size:
         return []
 
     ret_sums = list()
     for i in range(num_depths - window_size + 1):
-        ret_sums.append(sum(depths[i:i+window_size]))
+        ret_sums.append(sum(depths[i : i + window_size]))
 
     return ret_sums
 
@@ -27,7 +27,7 @@ def get_num_increases(lst_depths: list) -> int:
 
     ctx = 0
     for i in range(num_depths - 1):
-        ctx += (1 if lst_depths[i] < lst_depths[i+1] else 0)
+        ctx += 1 if lst_depths[i] < lst_depths[i + 1] else 0
 
     return ctx
 

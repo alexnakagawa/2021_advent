@@ -14,7 +14,7 @@ def get_distance_from_arr(directions: list) -> int:
         direction, length = d[0], int(d[1])
         if direction == "forward":
             horizontal += length
-            
+
         elif direction == "down":
             depth += length
         elif direction == "up":
@@ -31,7 +31,7 @@ def get_distance_by_aim(directions: list) -> int:
         direction, length = d[0], int(d[1])
         if direction == "forward":
             horizontal += length
-            depth += (aim * length)
+            depth += aim * length
         elif direction == "down":
             aim += length
         elif direction == "up":
