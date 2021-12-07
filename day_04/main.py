@@ -38,32 +38,26 @@ def is_bingo(matrix):
     for i in range(5):
         row_remain = np.count_nonzero(matrix[i:,] != -1)
         col_remain = np.count_nonzero(matrix[:,i] != -1)
-        if not row_remain or not col_remain:
-            print("BINGO!")
+        if (not row_remain) or (not col_remain):
             return True
     return False
 
 
-def get_winning_board_and_number(drawn, matrices, is_first=True):
-    boards_remaining = set(np.arange(len(matrices)))
+def get_winning_board_and_number(drawn, matrices, get_last=False):
+    bingo_board_idx = set()
     for i, d in enumerate(drawn):
+        print(f"{d} was drawn")
         for idx in range(len(matrices)):
             # check for drawn d
             m = matrices[idx]
             matrices[idx] = np.where(m == d, -1, m)
-            if is_bingo(matrices[idx]):
-                boards_remaining.discard(idx)
-                if is_first:
+            if get_last is False and is_bingo(matrices[idx]):
+                return matrices[idx], d
+            if get_last is True and (idx not in bingo_board_idx) and is_bingo(matrices[idx]):
+                bingo_board_idx.add(idx)
+                if len(bingo_board_idx) == 100:
                     return matrices[idx], d
-                else:
-                    print(boards_remaining)
-                    if len(boards_remaining) == 1:
-                        for j in range(i+1, len(drawn)):
-                            cur_drawn = drawn[j]
-                            m = matrices[idx]
-                            matrices[idx] = np.where(m == cur_drawn, -1, m)
-                            if is_bingo(matrices[idx]):
-                                return matrices[idx], cur_drawn
+        print(matrices[73])
         
     return "No board found"
 
@@ -81,7 +75,7 @@ if __name__ == "__main__":
     print(f"First win number: {win_number}")
     final_score = get_final_score(win_board, win_number)
     print(f"FIRST BINGO FINAL SCORE: {final_score}")
-    last_win_board, last_win_number = get_winning_board_and_number(drawn, matrices, False)
+    last_win_board, last_win_number = get_winning_board_and_number(drawn, matrices, True)
     print(last_win_board)
     print(f"Last win number: {last_win_number}")
     last_final_score = get_final_score(last_win_board, last_win_number)
