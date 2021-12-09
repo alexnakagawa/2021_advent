@@ -36,7 +36,7 @@ def get_matrices_from_txt(filepath: str) -> list:
 
 def is_bingo(matrix):
     for i in range(5):
-        row_remain = np.count_nonzero(matrix[i:,] != -1)
+        row_remain = np.count_nonzero(matrix[i,:] != -1)
         col_remain = np.count_nonzero(matrix[:,i] != -1)
         if (not row_remain) or (not col_remain):
             return True
