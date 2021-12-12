@@ -1,6 +1,6 @@
 def get_arr_from_txt(filepath: str) -> list:
     with open(filepath) as f:
-        ret = [int(v) for v in f.read().strip().split(',')]
+        ret = [int(v) for v in f.read().strip().split(",")]
 
     num_records = len(ret)
     print(f"There are {num_records} records in the input")
@@ -9,7 +9,7 @@ def get_arr_from_txt(filepath: str) -> list:
 
 
 def get_num_fishes(fishes: list, num_days: int):
-    age_counts = [0] * 9 
+    age_counts = [0] * 9
 
     # Each idx represents number of fishes at that index
     for age in fishes:
