@@ -43,16 +43,52 @@ def get_low_point_risk(matrix: np.array, rows: int, cols: int) -> int:
     return sum(low_points) + (len(low_points))
 
 
-# basin = set()
-# def get_low_point_basins(matrix: np.array, rows: int, cols: int) -> int:
-#     low_points_basins = []
-#     for y in range(rows):
-#         for x in range(cols):
-#             val = matrix[y][x]
-#             if is_low_point(val, matrix, x, y, rows, cols):
-#                 size_of_basin = 1
+def get_adjacent_indices(x, y, rows, cols):
+    idx = []
+    if x > 0:
+        idx.append((x - 1, y))
+    if y > 0:
+        idx.append((x, y - 1))
+    if x + 1 < cols:
+        idx.append((x + 1, y))
+    if y + 1 < rows:
+        idx.append((x, y + 1))
+    return idx
+
+
+def get_basin_size_product(matrix: np.array, rows: int, cols: int) -> int:
+    basin_sizes = []
+    for y in range(rows):
+        for x in range(cols):
+            basin_size = 0
+            to_visit = [(x, y)]
+            visited = []
+
+            while len(to_visit) > 0:
+                cur_x = to_visit[0][0]
+                cur_y = to_visit[0][1]
+                if matrix[cur_y][cur_x] != 9 and (to_visit[0] not in visited):
+                    basin_size += 1
+                    visited.append(to_visit[0])
+                    adjacent_indices = get_adjacent_indices(cur_x, cur_y, rows, cols)
+                    to_visit.extend(adjacent_indices)
+
+                to_visit.pop(0)
+
+            for i in visited:
+                matrix[i[1]][i[0]] = 9
+
+            if basin_size > 0:
+                basin_sizes.append(basin_size)
+
+    basin_sizes.sort(reverse=True)
+
+    return basin_sizes[0] * basin_sizes[1] * basin_sizes[2]
+
 
 if __name__ == "__main__":
     matrix, rows, cols = get_matrix_from_txt("./input.txt")
     low_point_risk = get_low_point_risk(matrix, rows, cols)
     print(f"{low_point_risk} risk")
+    basin_size_product = get_basin_size_product(matrix, rows, cols)
+    print(f"Basin size product: {basin_size_product}")
